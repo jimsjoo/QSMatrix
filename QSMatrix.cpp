@@ -31,6 +31,18 @@ int main(int argc, char **argv)
   }
   std::cout << std::endl;
 
+  QSMatrix<double> mat5(2, 3, {{3,-2,5},{3,0,4}});
+  QSMatrix<double> mat6(3, 2, {{2,3},{-9,0},{0,4}});
+  QSMatrix<double> mat7 = mat5 * mat6;
 
+  for (int i=0; i<mat7.get_rows(); i++) 
+  {
+    for (int j=0; j<mat7.get_cols(); j++) 
+    {
+      std::cout << mat7(i,j) << " ";
+    }
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
   return 0; 
 }

@@ -143,15 +143,17 @@ QSMatrix<T>& QSMatrix<T>::operator-=(const QSMatrix<T>& rhs)
 template<typename T>
 QSMatrix<T> QSMatrix<T>::operator*(const QSMatrix<T>& rhs)
 {
-  unsigned rows = rhs.get_rows();
-  unsigned cols = rhs.get_cols();
-  QSMatrix result(rows, cols, 0.0);
+  unsigned r1 = rows;
+  unsigned c1 = cols;
+  unsigned r2 = rhs.get_rows();
+  unsigned c2 = rhs.get_cols();
+  QSMatrix result(r1, c2, 0.0);
 
-  for (unsigned i=0; i<rows; i++)
+  for (unsigned i=0; i<r1; i++)
     {
-      for (unsigned j=0; j<cols; j++)
+      for (unsigned j=0; j<c2; j++)
         {
-          for (unsigned k=0; k<rows; k++)
+          for (unsigned k=0; k<c1; k++)
             {
               result(i,j) += this->mat[i][k] * rhs(k,j);
             }
@@ -174,13 +176,13 @@ QSMatrix<T>& QSMatrix<T>::operator*=(const QSMatrix<T>& rhs)
 template<typename T>
 QSMatrix<T> QSMatrix<T>::transpose()
 {
-  QSMatrix result(rows, cols, 0.0);
+  QSMatrix result(cols, rows, 0.0);
 
   for (unsigned i=0; i<rows; i++)
     {
       for (unsigned j=0; j<cols; j++)
         {
-          result(i,j) = this->mat[j][i];
+          result(j, i) = this->mat[i][j];
         }
     }
 
@@ -259,7 +261,7 @@ QSMatrix<T> QSMatrix<T>::operator/(const T& rhs)
 template<typename T>
 std::vector<T> QSMatrix<T>::operator*(const std::vector<T>& rhs)
 {
-  std::vector<T> result(rhs.size(), 0.0);
+  QSMatrix result(rhs.size(), 0.0);
 
   for (unsigned i=0; i<rows; i++)
     {
